@@ -28,9 +28,16 @@ const UserPage = () => {
 
   return (
     <div>
-      <h1>{user.name}</h1>
+      {user.map((u)=>  
+      <ol key={u.id}>
+
+
+        <h1>{u.name}</h1>
       <p>Email: {user.email}</p>
-      <p>Username: {user.username}</p>
+      <p>Username: </p>
+      <img src={user.image} alt="" />
+      </ol> )
+    }
       {/* Render additional user data here */}
     </div>
   );
