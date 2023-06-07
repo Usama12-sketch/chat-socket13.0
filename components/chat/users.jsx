@@ -8,7 +8,7 @@ const ChatUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/CRUD/getUsers');
+        const response = await fetch('/api/CRUD/getUsers');
         const data = await response.json();
         setUsers(data);
       } catch (error) {

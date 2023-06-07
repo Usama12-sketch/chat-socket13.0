@@ -6,7 +6,7 @@ const SendMessage = ({ id, refetch,sendcek , sendMsg ,setMsg, msg}) => {
   const sendMessage = async () => {
     if (msg.trim() !== '') {
       try {
-        const response = await fetch('http://localhost:3000/api/CRUD/chat', {
+        const response = await fetch('/api/CRUD/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
