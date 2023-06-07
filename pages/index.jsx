@@ -3,7 +3,22 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
-const UserPage = () => {
+
+
+
+export async function getServerSideProps() {
+
+  let response = await fetch(`https://node-js-usama-project.onrender.com/api/users`)
+  response = JSON.parse(JSON.stringify(response))
+  const data = await response.json();
+
+return{props:{
+  data
+}}
+  
+}
+
+const UserPage = (data) => {
   const session = useSession()
   const [user, setUser] = useState(null);
 
@@ -28,7 +43,7 @@ const UserPage = () => {
 
   return (
     <div>
-      {user.map((u)=>  
+      {data.map((u)=>  
       <ol key={u.id}>
 
 
