@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 export async function getServerSideProps() {
 
   let response = await fetch(`https://node-js-usama-project.onrender.com/api/users`)
-  response = JSON.parse(JSON.stringify(response))
+  // response = JSON.parse(JSON.stringify(response))
   const data = await response.json();
 
 return{props:{
@@ -18,7 +18,7 @@ return{props:{
   
 }
 
-const UserPage = (data) => {
+const UserPage = ({data}) => {
   const session = useSession()
   const [user, setUser] = useState(null);
 
@@ -37,9 +37,9 @@ const UserPage = (data) => {
     fetchUser();
   }, []);
 
-  if (!user) {
-    return <div>Loading...</div>;
-  }
+  // if (!user) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div>
@@ -48,9 +48,9 @@ const UserPage = (data) => {
 
 
         <h1>{u.name}</h1>
-      <p>Email: {user.email}</p>
+      <p>Email: {u.email}</p>
       <p>Username: </p>
-      <img src={user.image} alt="" />
+      <img src={u.image} alt="" />
       </ol> )
     }
       {/* Render additional user data here */}
