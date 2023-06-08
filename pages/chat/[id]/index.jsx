@@ -138,23 +138,49 @@ const SingleChat = ({messagess}) => {
     });
     
     // socket disconnet onUnmount if exists
-    if (socket) return () => socket.disconnect();
+    if (socket) return () => socket.off();
   }
   }, []);
   
   const loadMessages = async () => {
     if (messages) {
-      // Loading messages
-      const resp = await fetch("/api/loadMsg", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(messages),
-      });
+      const url1 = "https://chat-socket13-0.vercel.app/api/loadMsg";
+      const url2 = "http://localhost:3000/api/loadMsg";
       
+      let response;
+      try {
+        response = await fetch(url1, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(messages),
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+  
+      if (!response || !response.ok) {
+        try {
+          response = await fetch(url2, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(messages),
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+  
+      if (response && response.ok) {
+        const data = await response.json();
+        // Process the response data here
+      }
     }
   };
+  
 
   const deleteMsg = async (id) =>{
 
@@ -198,6 +224,7 @@ const SingleChat = ({messagess}) => {
         
 {/* profile */}
 <ol className='m-2  flex gap-2'>
+
 <div className=' rounded-2xl overflow-hidden  w-10 '> 
    {session.data?.user.image && <Image  src={session.data?.user.image} height={100} width={100} alt='user image'/>}
 </div>
