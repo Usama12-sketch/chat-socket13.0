@@ -22,7 +22,8 @@ const SingleChat = ({messagess}) => {
   const session = useSession()
   const router = useRouter()
   
-  
+  const baseURl = "https://node-js-usama-project.onrender.com"
+  // const baseURl = "http://localhost:3001"
   
   const fetchChatMessages = async (otherId) => {
     try {
@@ -111,7 +112,7 @@ const SingleChat = ({messagess}) => {
     // });
 
 
-const socket = io(process.env.BASE_URL); // Replace with your server URL
+const socket = io(baseURl); // Replace with your server URL
     // log socket connection
     socket.on("connect", async () => {
       
@@ -147,8 +148,7 @@ const socket = io(process.env.BASE_URL); // Replace with your server URL
   
   const loadMessages = async () => {
     if (messages) {
-      const url1 = "https://chat-socket13-0.vercel.app/api/loadMsg";
-      const url2 = "http://localhost:3001/api/loadMsg";
+      const url1 = `${baseURl}/api/loadMsg`;
       
       let response;
       try {
@@ -163,43 +163,26 @@ const socket = io(process.env.BASE_URL); // Replace with your server URL
         console.error("Error:", error);
       }
   
-      if (!response || !response.ok) {
-        try {
-          response = await fetch(url2, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(messages),
-          });
-        } catch (error) {
-          console.error("Error:", error);
-        }
-      }
-  
-      if (response && response.ok) {
-        const data = await response.json();
-        // Process the response data here
-      }
+     
     }
   };
   
 
   const deleteMsg = async (id) =>{
 
-    const resp = await fetch(`/api/chat/${id}`, {
-      method: "POST",
+    const resp = await fetch(`${baseURl}/api/chat/${id}`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(id),
+      body: JSON.stringify({id}),
     });
     
   }
   
   const sendMsg = async (newMessage) => {
    
-        const resp = await fetch("/api/chat", {
+        const resp = await fetch(`${baseURl}/api/chat`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
