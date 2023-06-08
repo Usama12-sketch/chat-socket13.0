@@ -207,7 +207,7 @@ const SingleChat = ({messagess}) => {
         {/* messages */}
 
     
-<Messages session={session} deleteMsg={deleteMsg} chat={chat}/>
+<Messages session={session} deleteMsg={deleteMsg} chat={messages}/>
          
          
          {/* send messages */}
