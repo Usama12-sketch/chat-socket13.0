@@ -53,7 +53,6 @@ const UserPage = ({data}) => {
       <img src={u.image} alt="" />
       </ol> )
     }
-      {/* Render additional user data here */}
     </div>
   );
 };
