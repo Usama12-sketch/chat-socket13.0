@@ -6,27 +6,28 @@ import { useSession } from 'next-auth/react';
 
 
 
-export async function getServerSideProps() {
+// export async function getServerSideProps() {
 
-  let response = await fetch(`https://node-js-usama-project.onrender.com/api/users`)
-  // response = JSON.parse(JSON.stringify(response))
-  const data = await response.json();
+//   let response = await fetch(`https://node-js-usama-project.onrender.com/api/users`)
+//   // response = JSON.parse(JSON.stringify(response))
+//   const data = await response.json();
 
-return{props:{
-  data
-}}
+// return{props:{
+//   data
+// }}
   
-}
+// }
 
 const UserPage = ({data}) => {
   const session = useSession()
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await fetch(`https://node-js-usama-project.onrender.com/api/users`);
         const userData = await response.json();
+        console.log(userData)
         setUser(userData);
         console.log(userData)
       } catch (error) {
@@ -44,7 +45,7 @@ const UserPage = ({data}) => {
   return (
     <div>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bEEY0pJJXz4?start=143" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
       {user.map((u)=>  
       <ol key={u.id}>
 
