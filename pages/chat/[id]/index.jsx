@@ -72,8 +72,8 @@ const SingleChat = ({messagess}) => {
       async () => await fetchChatMessages("646ca29af66ecd0af83d0eff"),
    {
      refetchOnWindowFocus: false,
-     staleTime: 0,
-    //  initialData: messagess,
+    //  staleTime: 0,
+     initialData: messagess,
     }
     );
     
