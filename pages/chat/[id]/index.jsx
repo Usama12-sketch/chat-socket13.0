@@ -9,6 +9,7 @@ import { getSession, useSession } from 'next-auth/react'
 import { authOptions } from '../../api/auth/[...nextauth]'
 
 import SocketIOClient from "socket.io-client";
+import io from "socket.io-client";
 import Messages from '../../../components/chat/Messages';
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -105,10 +106,12 @@ const SingleChat = ({messagess}) => {
   if (session){
 
     // connect to socket server
-    const socket = SocketIOClient.connect(process.env.BASE_URL, {
-      path: "/api/socketio",
-    });
-    
+    // const socket = SocketIOClient.connect(process.env.BASE_URL, {
+    //   path: "/api/socketio",
+    // });
+
+
+const socket = io(process.env.BASE_URL); // Replace with your server URL
     // log socket connection
     socket.on("connect", async () => {
       
@@ -145,7 +148,7 @@ const SingleChat = ({messagess}) => {
   const loadMessages = async () => {
     if (messages) {
       const url1 = "https://chat-socket13-0.vercel.app/api/loadMsg";
-      const url2 = "http://localhost:3000/api/loadMsg";
+      const url2 = "http://localhost:3001/api/loadMsg";
       
       let response;
       try {
