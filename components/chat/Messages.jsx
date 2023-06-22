@@ -1,11 +1,18 @@
 import React from 'react';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Image from 'next/image';
-const Messages = ({ session, chat, deleteMsg }) => {
+import { useAtom } from 'jotai';
+import { Theme } from '../Profile'
+
+import { baseURL } from '../../pages/chat/[id]';
+const Messages = ({ session, chat, deleteMsg, toast }) => {
   const reversedChat = [...chat].reverse(); // Create a reversed copy of the chat array
 
+  const [dark, setDark ] = useAtom(Theme)
+
+  const [baseURl] = useAtom(baseURL)
   return (
-    <div className='flex h-full flex-col-reverse overflow-y-auto bg-gradient-to-tr from-blue-400 to-red-400'>
+    <div className={`flex h-full flex-col-reverse overflow-y-auto   ${dark ? "bg-gradient-to-br  from-gray-800 to-green-600 text-white" : "bg-gradient-to-tr from-blue-400 to-red-400"}`}>
       {reversedChat.map((message, index) => {
         const messageDate = new Date(message.timestamp);
         const messageDateString = messageDate.toLocaleDateString();
@@ -31,12 +38,13 @@ const Messages = ({ session, chat, deleteMsg }) => {
 </div>
                 <p className='text-xl font-semibold'>{message.content}</p>
                 {session.data?.user.name === message.sender.name && (
-                  <button className=' w-max' onClick={() => deleteMsg(message.id)}>
+                  <button className=' w-max' onClick={() => deleteMsg(message.id , baseURl,toast)}>
                     <DeleteOutlineIcon/>
                   </button>
                 )}
                 </div>
                 <div>
+
                   <span className=' text-sm bg-gray-400 rounded-sm'>
                      {messageTimeString} : {messageDateString} 
                      </span>
@@ -48,8 +56,7 @@ const Messages = ({ session, chat, deleteMsg }) => {
           </div>
         );
       })}
-    </div>
-  );
+    </div>  );
 };
 
 export default Messages;

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import { Theme } from '../Profile';
+import { useAtom } from 'jotai';
 
 
 const ChatUsers = () => {
@@ -24,6 +26,7 @@ const session = useSession()
     fetchUsers();
   }, []);
   console.log(router)
+  const [dark, setDark ] = useAtom(Theme)
 
   
   return (
@@ -33,7 +36,7 @@ const session = useSession()
 
       <div className="flex flex-col">
         {users.map((user) => (
-          <div key={user.id} className= " h-24 flex items-center justify-center w-full text-blue-500 bg-white rounded shadow m-1 p-2 ">
+          <div key={user.id} className= {` h-24 flex items-center justify-center w-full text-blue-500 ${dark ? "bg-gradient-to-br  rounded-2xl  from-gray-800 to-green-60" : " rounded-m bg-gradient-to-br  from-emerald-500"} rounded shadow m-1 p-2 `}>
               
 
             <Link className={` flex gap-1 duration-500 h-full w-full ease-in-out  items-center ${path === user.id ? "border-4 hover:border-2 border-green-300" : " bg-green-200 hover:bg-green-300" }`} href={`/chat/${user.id}`}>
