@@ -19,7 +19,12 @@ import { useSession } from 'next-auth/react';
 // }
 
 const UserPage = ({data}) => {
+  
+  
   const session = useSession()
+
+   
+
   const [user, setUser] = useState([]);
 
   useEffect(() => {

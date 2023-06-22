@@ -1,9 +1,14 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image'
-import  { useContext } from 'react';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+
+
 const ChatUsers = () => {
-  
+const session = useSession()
+  const router = useRouter()
+  let path = router.query.id
   const [users, setUsers] = useState([]);
   useEffect(() => {
     const fetchUsers = async () => {
@@ -18,25 +23,27 @@ const ChatUsers = () => {
 
     fetchUsers();
   }, []);
+  console.log(router)
 
   
   return (
     <div className="  w-full  px-4 m-2 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold mb-4">Chat with Users</h1>
+     
+      <h1 className="text-4xl font-bold mb-4 bg-clip-text bg-gradient-to-br text-transparent from-purple-500 to-green p-2 ">Users</h1>
 
       <div className="flex flex-col">
         {users.map((user) => (
-          <div key={user.id} className= " text-blue-500 bg-white rounded shadow m-1 p-4">
+          <div key={user.id} className= " h-24 flex items-center justify-center w-full text-blue-500 bg-white rounded shadow m-1 p-2 ">
+              
 
+            <Link className={` flex gap-1 duration-500 h-full w-full ease-in-out  items-center ${path === user.id ? "border-4 hover:border-2 border-green-300" : " bg-green-200 hover:bg-green-300" }`} href={`/chat/${user.id}`}>
 
-            <Link className=' flex' href={`/chat/${user.id}`}> 
-            <div className='  overflow-hidden rounded-[3rem]  w-10 h-10 '> 
-    <Image  src={user.image} height={60} width={40} alt='user image'/>
+            <div className='  overflow-hidden rounded-[5rem] w-15 h-15 '> 
+    <Image  src={user.image} height={70} width={70} alt='user image'/>
 </div>
             <p className="text-lg font-bold mb-2">{user.name}</p>
             </Link>
-
-            {/* Additional user information */}
+ 
           </div>
         ))}
       </div>
